@@ -11,6 +11,9 @@ public:
 	Sphere();
 	Sphere(std::vector<Vertex_Normal> & sphere);
 	Sphere(std::vector<Vertex_Normal> & cur, int numDiv,  std::vector<Vertex_Normal> & ret);
+	
+	void Intersect(HitRecord & hr, Point3 P, Vector3 d) override;
+
 private:
 	void subDivide(Vector4 v0, Vector4 v1, Vector4 v , int numDiv, std::vector<Vertex_Normal> & vec);
 	

@@ -37,12 +37,36 @@ void ShapesInterface::cb_Torus(Fl_Menu_* o, void* v) {
   ((ShapesInterface*)(o->parent()->user_data()))->cb_Torus_i(o,v);
 }
 
+void ShapesInterface::cb_Diamond_i(Fl_Menu_*, void*) {
+  myShapes.changedShape();
+}
+void ShapesInterface::cb_Diamond(Fl_Menu_* o, void* v) {
+  ((ShapesInterface*)(o->parent()->user_data()))->cb_Diamond_i(o,v);
+}
+
+void ShapesInterface::cb_Bunny_i(Fl_Menu_*, void*) {
+  myShapes.changedShape();
+}
+void ShapesInterface::cb_Bunny(Fl_Menu_* o, void* v) {
+  ((ShapesInterface*)(o->parent()->user_data()))->cb_Bunny_i(o,v);
+}
+
+void ShapesInterface::cb_Ding_i(Fl_Menu_*, void*) {
+  myShapes.changedShape();
+}
+void ShapesInterface::cb_Ding(Fl_Menu_* o, void* v) {
+  ((ShapesInterface*)(o->parent()->user_data()))->cb_Ding_i(o,v);
+}
+
 Fl_Menu_Item ShapesInterface::menu_m_iShapeType[] = {
  {"Sphere", 0,  (Fl_Callback*)ShapesInterface::cb_Sphere, 0, 4, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cone", 0,  (Fl_Callback*)ShapesInterface::cb_Cone, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cylinder", 0,  (Fl_Callback*)ShapesInterface::cb_Cylinder, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cube", 0,  (Fl_Callback*)ShapesInterface::cb_Cube, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Torus", 0,  (Fl_Callback*)ShapesInterface::cb_Torus, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Diamond", 0,  (Fl_Callback*)ShapesInterface::cb_Diamond, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Bunny", 0,  (Fl_Callback*)ShapesInterface::cb_Bunny, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Ding", 0,  (Fl_Callback*)ShapesInterface::cb_Ding, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 

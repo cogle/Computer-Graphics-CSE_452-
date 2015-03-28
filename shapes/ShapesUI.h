@@ -25,7 +25,10 @@ public:
         SHAPE_CONE,
         SHAPE_CYLINDER,
         SHAPE_CUBE,
-		SHAPE_TORUS
+		SHAPE_TORUS,
+		SHAPE_DIAMOND,
+		SHAPE_BUNNY,
+		SHAPE_DING
     };
 
     enum DisplayType {

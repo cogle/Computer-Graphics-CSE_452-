@@ -1,6 +1,11 @@
 #include "Square.h"
 #include "Cylinder.h"
 
+Square::Square(){
+
+}
+
+
 Square::Square(std::vector<std::vector<Face_Normal>> & square, int scale){
 	std::vector<Face_Normal> temp;
 	const double base = 0.5;
@@ -106,5 +111,120 @@ Square::Square(std::vector<std::vector<Face_Normal>> & square, int scale){
 		start_fy -= scale_factor;
 		start_lx = base;
 		start_ly -= scale_factor;
+	}
+}
+
+void Square::Intersect(HitRecord & hr, Point3 P, Vector3 d){
+	//Use all six faces and check using plane individually
+	
+	//Positive and Negative Y
+	double t_1;
+	double t_2;
+	
+	//Positve and Negative X
+	double t_3;
+	double t_4;
+
+	//Positive and Negative Z
+	double t_5;
+	double t_6;
+	
+	//Positive Y
+	double denom_1 = d[1];
+	//Negative Y
+	double denom_2 = -d[1];
+	
+	//Positve X
+	double denom_3 = d[0];
+	//Negative X
+	double denom_4 = -d[0];
+	
+	//Positive Z
+	double denom_5 = d[2];
+	//Negative Z
+	double denom_6 = -d[2];
+
+
+	double half = double(.5);
+	//Y
+	if (!isZero(denom_1)){
+		double top_lhs = half;
+		double top_rhs = P[1];
+		double top = top_lhs - top_rhs;
+
+		t_1 = double(top) / double(denom_1);
+		Vector3 pt = Vector3(P[0], P[1], P[2]) + t_1*d;
+		if (t_1 > 0 && pt[0] < .5 && pt[0] > -.5  && pt[2] < .5 && pt[2] > -.5){
+			hr.addHit(t_1, 0, 0, Point3(pt[0], pt[1], pt[2]), Vector3(0, 1, 0));
+		}
+	}
+	if (!isZero(denom_2)){
+		double top_lhs = half;
+		double top_rhs = -P[1];
+		double top = top_lhs - top_rhs;
+
+		t_2 = top / denom_2;
+		Vector3 pt = Vector3(P[0], P[1], P[2]) + t_2*d;
+		if (t_2 > 0 && pt[0] < .5 && pt[0] > -.5  && pt[2] < .5 && pt[2] > -.5){
+			hr.addHit(t_2, 0, 0, Point3(pt[0], pt[1], pt[2]), Vector3(0, -1, 0));
+		}
+	}
+
+	//X
+	if (!isZero(denom_3)){
+		double top_lhs = double(.5);
+		double top_rhs = P[0];
+		double top = top_lhs - top_rhs;
+
+		t_3 = top / denom_3;
+
+		Vector3 pt = Vector3(P[0], P[1], P[2]) + t_3*d;
+		if (t_3 > 0 && pt[1] < .5 && pt[1] > -.5  && pt[2] < .5 && pt[2] > -.5){
+			
+			hr.addHit(t_3, 0, 0, Point3(pt[0], pt[1], pt[2]), Vector3(1, 0, 0));
+		}
+	}
+
+	if (!isZero(denom_4)){
+		double top_lhs = double(.5);
+		double top_rhs = -P[0];
+		double top = top_lhs - top_rhs;
+
+		t_4 = top / denom_4;
+
+		Vector3 pt = Vector3(P[0], P[1], P[2]) + t_4*d;
+		if (t_4 > 0 && pt[1] < .5 && pt[1] > -.5  && pt[2] < .5 && pt[2] > -.5){
+			
+			hr.addHit(t_4, 0, 0, Point3(pt[0], pt[1], pt[2]), Vector3(-1, 0, 0));
+		}
+	}
+
+	//Y
+	if (!isZero(denom_5)){
+		double top_lhs = double(.5);
+		double top_rhs = P[2];
+		double top = top_lhs - top_rhs;
+
+		t_5 = top / denom_5;
+
+		Vector3 pt = Vector3(P[0], P[1], P[2]) + t_5*d;
+		if (t_5 > 0 && pt[1] < .5 && pt[1] > -.5  && pt[0] < .5 && pt[0] > -.5){
+
+			hr.addHit(t_5, 0, 0, Point3(pt[0], pt[1], pt[2]), Vector3(0, 0, 1));
+		}
+	}
+
+	if (!isZero(denom_6)){
+		double top_lhs = double(.5);
+		double top_rhs = -P[2];
+		double top = top_lhs - top_rhs;
+
+		t_6 = top / denom_6;
+
+		Vector3 pt = Vector3(P[0], P[1], P[2]) + t_6*d;
+		if (t_6 > 0 && pt[1] < .5 && pt[1] >= -.5  && pt[0] < .5 && pt[0] > -.5){
+			
+			hr.addHit(t_6, 0, 0, Point3(pt[0], pt[1], pt[2]), Vector3(0, 0, -1));
+		}
 	}
 }

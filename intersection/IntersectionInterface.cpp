@@ -34,11 +34,38 @@ void IntersectionInterface::cb_Cube(Fl_Menu_* o, void* v) {
   ((IntersectionInterface*)(o->parent()->user_data()))->cb_Cube_i(o,v);
 }
 
+void IntersectionInterface::cb_Diamond_i(Fl_Menu_*, void*) {
+  intersectionUI.changeShape( (ShapesUI::ShapeType) m_iShapeType->value());
+RedrawWindow();
+}
+void IntersectionInterface::cb_Diamond(Fl_Menu_* o, void* v) {
+  ((IntersectionInterface*)(o->parent()->user_data()))->cb_Diamond_i(o,v);
+}
+
+void IntersectionInterface::cb_Bunny_i(Fl_Menu_*, void*) {
+  intersectionUI.changeShape( (ShapesUI::ShapeType) m_iShapeType->value());
+RedrawWindow();
+}
+void IntersectionInterface::cb_Bunny(Fl_Menu_* o, void* v) {
+  ((IntersectionInterface*)(o->parent()->user_data()))->cb_Bunny_i(o,v);
+}
+
+void IntersectionInterface::cb_Ding_i(Fl_Menu_*, void*) {
+  intersectionUI.changeShape( (ShapesUI::ShapeType) m_iShapeType->value());
+RedrawWindow();
+}
+void IntersectionInterface::cb_Ding(Fl_Menu_* o, void* v) {
+  ((IntersectionInterface*)(o->parent()->user_data()))->cb_Ding_i(o,v);
+}
+
 Fl_Menu_Item IntersectionInterface::menu_m_iShapeType[] = {
  {"Sphere", 0,  (Fl_Callback*)IntersectionInterface::cb_Sphere, 0, 4, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cone", 0,  (Fl_Callback*)IntersectionInterface::cb_Cone, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cylinder", 0,  (Fl_Callback*)IntersectionInterface::cb_Cylinder, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cube", 0,  (Fl_Callback*)IntersectionInterface::cb_Cube, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Diamond", 0,  (Fl_Callback*)IntersectionInterface::cb_Diamond, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Bunny", 0,  (Fl_Callback*)IntersectionInterface::cb_Bunny, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Ding", 0,  (Fl_Callback*)IntersectionInterface::cb_Ding, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 

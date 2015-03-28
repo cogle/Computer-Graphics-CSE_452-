@@ -7,6 +7,8 @@ class Torus : public Shape{
 public:
 	Torus();
 	Torus(int param1, int param2, std::vector<Vertex_Normal> &  torus, std::vector<Line_Points> &  torus_circles);
+	void Intersect(HitRecord & hr, Point3 P, Vector3 d) override;
+
 private:
 	void Circle(double current_theta, int num_divisions, std::vector<Line_Points> &  t_circles);
 	void AddPoints(Vector3 v1, Vector3 v2, double v1_angle, double v2_angle, double current_theta, std::vector<Line_Points> &  t_circles);

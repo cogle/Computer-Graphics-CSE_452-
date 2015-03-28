@@ -70,9 +70,12 @@ void ShapesUI::changedShape()
 		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1());
 		shape->Draw();
 	}
-	if (shapesUI->getShapeType() == SHAPE_CYLINDER || shapesUI->getShapeType() == SHAPE_CONE || shapesUI->getShapeType() == SHAPE_TORUS){
+	if (shapesUI->getShapeType() == SHAPE_CYLINDER || shapesUI->getShapeType() == SHAPE_CONE || shapesUI->getShapeType() == SHAPE_TORUS || shapesUI->getShapeType() == SHAPE_DIAMOND){
 		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1(), shapesUI->getTessel2());
 		shape->Draw();
+	}
+	if (shapesUI->getShapeType() == SHAPE_BUNNY || shapesUI->getShapeType() == SHAPE_DING){
+		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1(), shapesUI->getTessel2());
 	}
     RedrawWindow();
 }
@@ -83,7 +86,7 @@ void ShapesUI::changedTessel( ) {
 		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1());
 		shape->Draw();
 	}
-	if (shapesUI->getShapeType() == SHAPE_CYLINDER || shapesUI->getShapeType() == SHAPE_CONE || shapesUI->getShapeType() == SHAPE_TORUS){
+	if (shapesUI->getShapeType() == SHAPE_CYLINDER || shapesUI->getShapeType() == SHAPE_CONE || shapesUI->getShapeType() == SHAPE_TORUS || shapesUI->getShapeType() == SHAPE_DIAMOND ){
 		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1(), shapesUI->getTessel2());
 		shape->Draw();
 	}

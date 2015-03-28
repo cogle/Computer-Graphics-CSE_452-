@@ -63,6 +63,12 @@ public:
         if (hits.size() > 0)
             hits.pop_front();
     }
+
+
+
+	int getSize(){
+		return int(hits.size());
+	}
     
 private:
     class Hit {
@@ -103,8 +109,8 @@ inline std::ostream& operator<<(std::ostream& os, HitRecord& hr) {
         HitRecord::Hit& h = *it;
         os << " |";
         os << " " << h.t;
-        os << " " << h.u;
-        os << " " << h.v;
+       // os << " " << h.u;
+      //  os << " " << h.v;
         os << " " << h.p;
         os << " " << h.n;
     }

@@ -1,5 +1,8 @@
 ﻿#include "Sphere.h"
 
+Sphere::Sphere(){
+}
+
 Sphere::Sphere(std::vector<Vertex_Normal> & shpere){
 	//This was developed using the methods from Wikipedia page on http://en.wikipedia.org/wiki/Regular_icosahedron#Spherical_coordinates
 		
@@ -90,4 +93,58 @@ void Sphere::subDivide(Vector4 v0, Vector4 v1, Vector4 v2, int depth, std::vecto
 	subDivide(v1, pass_v12, pass_v01, depth, vec);
 	subDivide(v2, pass_v02, pass_v12, depth, vec);
 	subDivide(pass_v01, pass_v12, pass_v02, depth, vec);
+}
+
+void Sphere::Intersect(HitRecord & hr, Point3 P, Vector3 d){
+	double A = double(pow(d[0], 2)) + double(pow(d[1], 2)) + double(pow(d[2], 2));
+	double r_2 = double(pow(.5,2));
+	//Most likely will never be zero however this is implemented in order to embody object oriented programming, and
+	//the fact you never really know what the user is going to do.
+
+	if (!IsZero(A)){
+		double denom = 2 * A;
+		double top_lhs;
+		double top_rhs;
+		
+		double B = double(2) * (P[0] * d[0] + P[1] * d[1] + P[2] * d[2]);
+		double C = P[0] * P[0] + P[1] * P[1] + P[2] * P[2]-r_2;
+		
+		top_lhs = -B;
+		top_rhs = (double(pow(B, 2)) - 4 * A*C);
+
+		if (top_rhs < 0 ){
+			return;
+		}
+
+		double top_sum = top_lhs + double(sqrt(top_rhs));
+		double top_diff = top_lhs - double(sqrt(top_rhs));
+
+
+		double t_1 = top_diff/denom;
+		double t_2 = top_sum/denom;
+
+
+		if (t_2 < 0){
+			return;
+		}
+		if (t_1 < 0 && t_2 > 0){		
+			Vector3 q = Vector3(P[0],P[1],P[2]) + t_2*d;
+			Vector3 norm = q;
+			norm.normalize();
+			hr.addHit(t_2, 0, 0, Point3(q[0], q[1], q[2]), CalcNormal(norm, 3));
+		}
+		if (t_1 > 0){
+			Vector3 q = Vector3(P[0], P[1], P[2]) + t_1*d;
+			Vector3 norm = q;
+			norm.normalize();
+			hr.addHit(t_1, 0, 0, Point3(q[0], q[1], q[2]), CalcNormal(norm, 3));
+			if (t_2 > 0){
+				Vector3 q = Vector3(P[0], P[1], P[2]) + t_2*d;
+				Vector3 norm = q;
+				norm.normalize();
+				hr.addHit(t_2, 0, 0, Point3(q[0], q[1], q[2]), CalcNormal(norm, 3));
+			}
+		}
+	}
+
 }

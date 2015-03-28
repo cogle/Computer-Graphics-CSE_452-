@@ -8,7 +8,7 @@ class ShapesInterface {open
   } {
     Fl_Window m_shapesWindow {
       label {Shapes UI} open
-      xywh {556 351 395 145} type Double resizable
+      xywh {254 601 395 145} type Double resizable
       code0 {\#include "ShapesUI.h"} visible
     } {
       Fl_Choice m_iShapeType {
@@ -32,13 +32,28 @@ class ShapesInterface {open
         }
         MenuItem {} {
           label Cube
-          callback {myShapes.changedShape();} selected
+          callback {myShapes.changedShape();}
           xywh {30 30 100 20}
         }
         MenuItem {} {
           label Torus
           callback {myShapes.changedShape();}
           xywh {0 0 100 20}
+        }
+        MenuItem {} {
+          label Diamond
+          callback {myShapes.changedShape();}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label Bunny
+          callback {myShapes.changedShape();}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label Ding
+          callback {myShapes.changedShape();} selected
+          xywh {0 0 30 20}
         }
       }
       Fl_Choice m_iDisplayType {

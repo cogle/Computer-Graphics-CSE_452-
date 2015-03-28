@@ -13,11 +13,25 @@
 #include <GL/glu.h>
 #include <fstream>
 
+
+
 IntersectionUI::IntersectionUI() {
     width = height = 0;
+	s = new Shape();
+	square_ptr = new Square();
+	sphere_ptr = new Sphere();
+	cone_ptr = new Cone();
+	cylinder_ptr = new Cylinder();
+	diamond_ptr = new Diamond();
 }
 
 IntersectionUI::~IntersectionUI() {
+	delete s;
+	delete square_ptr;
+	delete sphere_ptr;
+	delete cone_ptr;
+	delete cylinder_ptr;
+	delete diamond_ptr;
 }
 
 void IntersectionUI::resize(int w, int h) {
@@ -144,10 +158,43 @@ void IntersectionUI::draw() {
     // ToDo: draw your shape here and perform the intersection
     // then call drawHits so you can see where the ray has hit the shape
     // the origin is in variable 'p' and direction in variable 'dir'
+	HitRecord hr_1;
+	HitRecord hr_2;
+	HitRecord hr_Draw;
+	s->Draw();
 
-    //Call HitRecord hr = intersect(pE1, dir);
-    //drawHits(hr);
-
+	if (cur_type != 5){
+		GetIntersect(cur_type, hr_1, pE1, dir);
+		GetIntersect(cur_type, hr_2, pE2, -dir);
+		hr_1.sortHits();
+		hr_2.sortHits();
+		for (int i = 0; i < hr_1.getSize(); i++){
+			if (i == 1){
+				break;
+			}
+			double t, u, v;
+			Point3 p;
+			Vector3 n;
+			hr_1.getFirstHit(t, u, v, p, n);
+			hr_Draw.addHit(t, 0, 0, p, n);
+		}
+		for (int i = 0; i < hr_2.getSize(); i++){
+			if (i == 1){
+				break;
+			}
+			double t, u, v;
+			Point3 p;
+			Vector3 n;
+			hr_2.getFirstHit(t, u, v, p, n);
+			hr_Draw.addHit(t, 0, 0, p, n);
+		}
+	}
+	else{
+		GetIntersect(cur_type, hr_Draw, pAt, dir);
+		GetIntersect(cur_type, hr_Draw, pAt, -dir);
+	}
+	hr_Draw.sortHits();
+	drawHits(hr_Draw);	
     endDrawing();
 }
 
@@ -176,14 +223,33 @@ void IntersectionUI::drawHits(HitRecord& hr) {
 
 void IntersectionUI::changeShape( ShapesUI::ShapeType type )
 {
-    // ToDo: Change which shape
-    switch ( type ) {
-    case ShapesUI::SHAPE_SPHERE : break;
-    case ShapesUI::SHAPE_CYLINDER : break;
-    case ShapesUI::SHAPE_CONE : break;
-    case ShapesUI::SHAPE_CUBE : break;
-    }
+	cur_type = type;
+
+   switch ( type ) {
+    case ShapesUI::SHAPE_SPHERE: 
+		s->Set(type,5,5);
+		break;
+    case ShapesUI::SHAPE_CYLINDER : 
+		s->Set(type, 50, 50);
+		break;
+    case ShapesUI::SHAPE_CONE : 
+		s->Set(type, 50, 50);
+		break;
+    case ShapesUI::SHAPE_CUBE : 
+		s->Set(type, 50, 50);
+		break;
+	case 4:
+		s->Set(ShapesUI::SHAPE_DIAMOND, 50, 50);
+		break;
+	case 5:
+		s->Set(ShapesUI::SHAPE_BUNNY,1,1);
+		break;
+	case 6:
+		s->Set(ShapesUI::SHAPE_DING, 1, 1);
+		break;
+   } 
 }
+
 
 
 int IntersectionUI::handle(int event) {
@@ -191,7 +257,7 @@ int IntersectionUI::handle(int event) {
 }
 
 
-void IntersectionUI::writeTest() const {
+void IntersectionUI::writeTest(){
     // creates a deterministic sequence of ray positions and directions
     // and writes the resulting intersections to a file
     // you must add the proper intersect calls for this file to be generated
@@ -254,6 +320,14 @@ void IntersectionUI::writeTest() const {
         //cylinder.intersect(p, dir);
         //coneHr = cone.intersect(p, dir);
         //sphereHr = sphere.intersect(p, dir);
+		GetIntersect(ShapesUI::SHAPE_CUBE, cubeHr, p, dir);
+		cubeHr.sortHits();
+		GetIntersect(ShapesUI::SHAPE_CYLINDER, cylinderHr, p, dir);
+		cylinderHr.sortHits();
+		GetIntersect(ShapesUI::SHAPE_CONE, coneHr, p, dir);
+		coneHr.sortHits();
+		GetIntersect(ShapesUI::SHAPE_SPHERE, sphereHr, p, dir);
+		sphereHr.sortHits();
 
         // write out
         file << i << " Cube     " << cubeHr     << std::endl;
@@ -264,3 +338,31 @@ void IntersectionUI::writeTest() const {
     file.close();
 }
 
+void IntersectionUI::GetIntersect(ShapesUI::ShapeType t, HitRecord & hr, Point3 P, Vector3 d){
+	switch (t)
+	{
+	case ShapesUI::SHAPE_SPHERE:
+		sphere_ptr->Intersect(hr,P,d);
+		break;
+	case ShapesUI::SHAPE_CONE:
+		cone_ptr->Intersect(hr, P, d);
+		break;
+	case ShapesUI::SHAPE_CYLINDER:
+		cylinder_ptr->Intersect(hr,P,d);
+		break;
+	case ShapesUI::SHAPE_CUBE:
+		square_ptr->Intersect(hr,P,d);
+		break;
+	case 4:
+		diamond_ptr->Intersect(hr, P, d);
+		break;
+	case 5:
+		s->Intersect(hr,P,d);
+		break;
+	case 6:
+		s->Intersect(hr, P, d);
+		break;
+	default:
+		break;
+	}
+}

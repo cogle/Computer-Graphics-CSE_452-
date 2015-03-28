@@ -9,8 +9,9 @@
 #include <vector>
 #include "ShapesUI.h"
 #include <hash_map>
+#include "../intersection/HitRecord.h"
 
-
+#define EPSILON 0.000001
 
 class Shape{
 
@@ -26,6 +27,7 @@ public:
 			points.push_back(cord_1);
 			points.push_back(cord_2);
 			normal = norm;
+			normal.normalize();
 			ID = ID_NUM;
 		}
 		void print(){
@@ -44,6 +46,9 @@ public:
 	struct Vertex_Normal {
 		std::vector<Vector4> points;
 		std::vector<Vector3> normal;
+
+		//Only used for setting normal of Diamond 
+		bool top = false;
 		Vertex_Normal(Vector4 cord_0, Vector3 cord_0Norm, Vector4 cord_1, Vector3 cord_1Norm, Vector4 cord_2, Vector3 cord_2Norm){
 			//Point 0 and its normal
 			points.push_back(cord_0);
@@ -94,7 +99,30 @@ public:
 		}
 	};
 
-
+	struct Triangle {
+		std::vector<Vector4> points;
+		Vector3 normal;
+		Triangle(Vector4 cord_1, Vector4 cord_2, Vector4 cord_3){
+			points.push_back(cord_1);
+			points.push_back(cord_2);
+			points.push_back(cord_3);
+			Vector3 lhs = Vector3(cord_3[0], cord_3[1], cord_3[2]) - Vector3(cord_2[0], cord_2[1], cord_2[2]);
+			Vector3 rhs = Vector3(cord_1[0], cord_1[1], cord_1[2]) - Vector3(cord_2[0], cord_2[1], cord_2[2]);
+			normal = lhs^rhs;
+			normal.normalize();
+		}
+		void print(){
+			std::cout << "v0: ";
+			points[0].print();
+			std::cout << "v1: ";
+			points[1].print();
+			std::cout << "v2: ";
+			points[2].print();
+			std::cout << "With normal: ";
+			normal.print();
+			std::cout << std::endl;
+		}
+	};
 
 
 
@@ -120,6 +148,17 @@ public:
 
 	void Draw();
 
+	
+	bool IsZero(double num);
+	bool IsZero(Vector3 vec);
+	bool IsZero(Point3 pt);
+	bool LiesOnTriangle(const Vector3 & P, const Vector3 & A, const Vector3 & B, const Vector3 & C);
+
+	Vector3 Vector_Squared(const Vector3 & vec);
+	Point3 Point_Squared(const Point3 & pt);
+	Vector3	Vec_times_Point(const Vector3 & lhs, const Point3 & rhs);
+
+	virtual void Intersect(HitRecord & hr, Point3 P, Vector3 d);
 
 protected:
 	std::vector<std::vector<Face_Normal>> square;
@@ -166,6 +205,9 @@ private:
 
 	std::vector<Line_Points> torus_pts;
 
+	bool bunny = false;
+	bool ding = false;
+	std::vector<Triangle> faces;
 };
 
 

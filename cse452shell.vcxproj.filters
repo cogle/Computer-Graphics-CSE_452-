@@ -157,6 +157,12 @@
     <ClCompile Include="shapes\Torus.cpp">
       <Filter>Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="shapes\Diamond.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="shapes\Parser.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -274,6 +280,12 @@
       <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="shapes\Torus.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="shapes\Diamond.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="shapes\Parser.h">
       <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>

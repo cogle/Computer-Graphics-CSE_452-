@@ -77,3 +77,7 @@ double Torus::Calc_Z(double little_circle, double big_circle){
 	return (lhs*rhs);
 }
 
+void Torus::Intersect(HitRecord & hr, Point3 P, Vector3 d){
+	//Does nothing
+	return;
+}
