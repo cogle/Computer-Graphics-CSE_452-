@@ -20,13 +20,23 @@ void Shape::Set(ShapesUI::ShapeType type, int param1, int param2){
 	cur_t = type;
 	if (type == ShapesUI::SHAPE_BUNNY && !bunny){
 		faces.clear();
-		Parser a("bunny_low.m",faces);
+		Parser_MINE a("bunny_low.m", faces);
 		bunny = true;
 	}
 	if (type == ShapesUI::SHAPE_DING && !ding){
 		faces.clear();
-		Parser a("ding_hi.m", faces);
+		Parser_MINE a("ding_hi.m", faces);
 		ding = true;
+	}
+	if (type == ShapesUI::SHAPE_FISH && !fish){
+		faces.clear();
+		Parser_MINE a("fish_mid.m", faces);
+		fish = true;
+	}
+	if (type == ShapesUI::SHAPE_BOWL && !bowl){
+		faces.clear();
+		Parser_MINE a("bowl_hi.m", faces);
+		bowl = true;
 	}
 	if (type == ShapesUI::SHAPE_BUNNY && bunny){
 		return;
@@ -34,7 +44,13 @@ void Shape::Set(ShapesUI::ShapeType type, int param1, int param2){
 	if (type == ShapesUI::SHAPE_DING && ding){
 		return;
 	}
-	bunny = ding = false;
+	if (type == ShapesUI::SHAPE_FISH && fish){
+		return;
+	}
+	if (type == ShapesUI::SHAPE_BOWL && bowl){
+		return;
+	}
+	bunny = ding = fish = false;
 	if (prev_visit == false){
 		std::vector<Vertex_Normal> temp;
 		Sphere a(temp);
@@ -196,7 +212,8 @@ void Shape::Draw(){
 				if (square[i][j].ID == 1){
 					//Front Panel
 					glBegin(GL_TRIANGLES);
-						glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
+						//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
+						glNormal3d(1, 0, 0);
 						glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
 						glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
 						glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
@@ -209,7 +226,8 @@ void Shape::Draw(){
 
 					//Have to draw in reverse order
 					glBegin(GL_TRIANGLES);
-						glNormal3d(square[i][j].normal[0]*-1, square[i][j].normal[1], square[i][j].normal[2]);
+						//glNormal3d(square[i][j].normal[0]*-1, square[i][j].normal[1], square[i][j].normal[2]);
+						glNormal3d(-1, 0, 0);
 						glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
 						glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
 						glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
@@ -219,7 +237,8 @@ void Shape::Draw(){
 				if (square[i][j].ID == 2){
 					//Front Panel
 					glBegin(GL_TRIANGLES);
-						glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
+						//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
+						glNormal3d(0, 0, 1);
 						glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
 						glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
 						glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
@@ -232,7 +251,8 @@ void Shape::Draw(){
 
 					//Have to draw in reverse order
 					glBegin(GL_TRIANGLES);
-						glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]*-1);
+						//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]*-1);
+						glNormal3d(0, 0, -1);
 						glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
 						glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
 						glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
@@ -403,13 +423,14 @@ void Shape::Draw(){
 			glEnd();
 		}
 	}
-	if (cur_t == ShapesUI::SHAPE_BUNNY || cur_t == ShapesUI::SHAPE_DING){
+	if (cur_t == ShapesUI::SHAPE_BUNNY || cur_t == ShapesUI::SHAPE_DING || cur_t == ShapesUI::SHAPE_FISH || cur_t == ShapesUI::SHAPE_BOWL){
 		for (int i = 0; i < int(faces.size()); i++){
 			//std::cout << i << std::endl;
 			//faces[i].print();
 			glBegin(GL_TRIANGLES);
 				
-				glNormal3d(faces[i].normal[0], faces[i].normal[1], faces[i].normal[2]);
+			//if (cur_t == ShapesUI::SHAPE_BOWL){ glNormal3d(-1*faces[i].normal[0], -1*faces[i].normal[1], -1*faces[i].normal[2]); }
+				glNormal3d(faces[i].normal[0], faces[i].normal[1], faces[i].normal[2]); 
 				glVertex3d(faces[i].points[0][0], faces[i].points[0][1], faces[i].points[0][2]);
 			
 				glVertex3d(faces[i].points[1][0], faces[i].points[1][1], faces[i].points[1][2]);

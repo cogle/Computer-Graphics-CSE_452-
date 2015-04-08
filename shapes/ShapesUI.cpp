@@ -74,7 +74,7 @@ void ShapesUI::changedShape()
 		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1(), shapesUI->getTessel2());
 		shape->Draw();
 	}
-	if (shapesUI->getShapeType() == SHAPE_BUNNY || shapesUI->getShapeType() == SHAPE_DING){
+	if (shapesUI->getShapeType() == SHAPE_BUNNY || shapesUI->getShapeType() == SHAPE_DING || shapesUI->getShapeType() == SHAPE_FISH || shapesUI->getShapeType() == SHAPE_BOWL){
 		shape->Set(shapesUI->getShapeType(), shapesUI->getTessel1(), shapesUI->getTessel2());
 	}
     RedrawWindow();

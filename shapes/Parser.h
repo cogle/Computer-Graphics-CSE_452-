@@ -10,11 +10,11 @@
 
 
 
-class Parser : public Shape{
+class Parser_MINE : public Shape{
 
 public:
-	Parser();
-	Parser(std::string file_name ,std::vector<Triangle> & f);
+	Parser_MINE();
+	Parser_MINE(std::string file_name, std::vector<Triangle> & f);
 
 private:
 	std::vector<Vector4> vertices;

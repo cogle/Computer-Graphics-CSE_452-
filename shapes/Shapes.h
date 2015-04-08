@@ -207,6 +207,8 @@ private:
 
 	bool bunny = false;
 	bool ding = false;
+	bool fish = false;
+	bool bowl = false;
 	std::vector<Triangle> faces;
 };
 

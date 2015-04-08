@@ -58,6 +58,20 @@ void ShapesInterface::cb_Ding(Fl_Menu_* o, void* v) {
   ((ShapesInterface*)(o->parent()->user_data()))->cb_Ding_i(o,v);
 }
 
+void ShapesInterface::cb_Fish_i(Fl_Menu_*, void*) {
+  myShapes.changedShape();
+}
+void ShapesInterface::cb_Fish(Fl_Menu_* o, void* v) {
+  ((ShapesInterface*)(o->parent()->user_data()))->cb_Fish_i(o,v);
+}
+
+void ShapesInterface::cb_Bowl_i(Fl_Menu_*, void*) {
+  myShapes.changedShape();
+}
+void ShapesInterface::cb_Bowl(Fl_Menu_* o, void* v) {
+  ((ShapesInterface*)(o->parent()->user_data()))->cb_Bowl_i(o,v);
+}
+
 Fl_Menu_Item ShapesInterface::menu_m_iShapeType[] = {
  {"Sphere", 0,  (Fl_Callback*)ShapesInterface::cb_Sphere, 0, 4, FL_NORMAL_LABEL, 0, 14, 0},
  {"Cone", 0,  (Fl_Callback*)ShapesInterface::cb_Cone, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
@@ -67,6 +81,8 @@ Fl_Menu_Item ShapesInterface::menu_m_iShapeType[] = {
  {"Diamond", 0,  (Fl_Callback*)ShapesInterface::cb_Diamond, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Bunny", 0,  (Fl_Callback*)ShapesInterface::cb_Bunny, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"Ding", 0,  (Fl_Callback*)ShapesInterface::cb_Ding, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Fish", 0,  (Fl_Callback*)ShapesInterface::cb_Fish, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Bowl", 0,  (Fl_Callback*)ShapesInterface::cb_Bowl, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 

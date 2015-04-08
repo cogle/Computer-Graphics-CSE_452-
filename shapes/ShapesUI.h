@@ -28,7 +28,9 @@ public:
 		SHAPE_TORUS,
 		SHAPE_DIAMOND,
 		SHAPE_BUNNY,
-		SHAPE_DING
+		SHAPE_DING,
+		SHAPE_FISH,
+		SHAPE_BOWL
     };
 
     enum DisplayType {

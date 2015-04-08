@@ -9,7 +9,11 @@
 #include <FL/Fl_Image.H>
 #include <string>
 #include <vector>
+#include "SubGraph.h"
+#include <map>
 
+
+#define DEBUG = 0;
 /*
  * This class holds all of the data in the scene file.
  *  Camera
@@ -18,10 +22,8 @@
  *  Root subgraph
  */
 
+
 // ToDo: Define these
-class Object;
-class Node;
-class Tree;
 
 class MyScene {
 public:
@@ -97,7 +99,9 @@ public:
 
     // Called when Object _name_ [ is encountered
     Object* parseObject(Parser& p);
-  
+	ShapeContainer * shape_c;
+	GLuint the_scene;
+	bool loaded = false;
 private:
     // Has loadSceneFile been called yet?
     bool isLoaded;
@@ -118,6 +122,15 @@ private:
     std::vector<Light> lights;
 
     // your functions/variables go here
+	std::map<const std::string, Tree*> master_subgraphs;
+	void RecursiveDescent(Trans * t, Matrix4 cur_m);
+
+	//In order to speed up and eliminate having to recurse in some cases
+	bool found_root = false;
+	bool added_trans = false;
+	std::vector<DrawObject> quick_load;
+	std::string cur_name;
+
 };
 
 #endif /* _MY_SCENE_H_ */

@@ -33,6 +33,10 @@ private:
   static void cb_Bunny(Fl_Menu_*, void*);
   void cb_Ding_i(Fl_Menu_*, void*);
   static void cb_Ding(Fl_Menu_*, void*);
+  void cb_Fish_i(Fl_Menu_*, void*);
+  static void cb_Fish(Fl_Menu_*, void*);
+  void cb_Bowl_i(Fl_Menu_*, void*);
+  static void cb_Bowl(Fl_Menu_*, void*);
 public:
   Fl_Choice *m_iDisplayType;
   static Fl_Menu_Item menu_m_iDisplayType[];
