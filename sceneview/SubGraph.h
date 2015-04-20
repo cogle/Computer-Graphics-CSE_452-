@@ -104,11 +104,15 @@ public:
 	inline void setShape(Shape * shape){ s = shape; }
 
 	inline void setShine(double s){ shine = s; }
-
+	inline double getShine(){ return shine; }
 	inline void setIOR(double num){ ior = num; }
 
 	inline void setName(std::string n){ object_name = n; }
 	
+	inline Shape * getShape(){ return s; };
+	inline void SetShapeNum(int num){ shape_num = num; };
+	inline int getShapeNum(){ return shape_num; };
+
 	void printInfo();
 
 	void drawObject();
@@ -127,7 +131,7 @@ private:
 
 	double index, shine, ior;
 
-
+	int shape_num;
 
 	std::string filename, object_name;
 
@@ -208,9 +212,11 @@ struct DrawObject{
 	DrawObject(Matrix4 & in_m, Object * in_o){
 		o = in_o;
 		m = in_m;
+		inverse_m = in_m.inverse();
 	}
 	Object * o = nullptr;
 	Matrix4 m;
+	Matrix4 inverse_m;
 	void Print(){
 		std::cout << "Matrix" << std::endl;
 		m.print();

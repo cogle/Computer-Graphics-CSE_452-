@@ -42,13 +42,13 @@
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>C:\Users\Christopher\Documents\Notes\CSE 452\cse452files\Output</OutDir>
-    <IntDir>C:\Users\Christopher\Documents\Notes\CSE 452\cse452files\Temp</IntDir>
+    <OutDir>\cse452files\Output</OutDir>
+    <IntDir>\cse452files\Temp</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>C:\Users\Christopher\Documents\Notes\CSE 452\cse452files\cse452\cse452shell</OutDir>
-    <IntDir>C:\Users\Christopher\Documents\Notes\CSE 452\cse452files\Temp</IntDir>
+    <OutDir>\cse452files\cse452\cse452shell</OutDir>
+    <IntDir>\cse452files\Temp</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,6 +126,7 @@
       <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
     </ClCompile>
+    <ClCompile Include="sceneview\SubGraph.cpp" />
     <ClCompile Include="shapes\Cone.cpp" />
     <ClCompile Include="shapes\Cylinder.cpp" />
     <ClCompile Include="shapes\Diamond.cpp" />
@@ -266,6 +267,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="cse452.h" />
     <ClInclude Include="GLWindow.h" />
+    <ClInclude Include="sceneview\SubGraph.h" />
     <ClInclude Include="shapes\Cone.h" />
     <ClInclude Include="shapes\Cylinder.h" />
     <ClInclude Include="shapes\Diamond.h" />

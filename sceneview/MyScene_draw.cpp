@@ -35,55 +35,14 @@ void MyScene::draw() {
 		glDeleteLists(the_scene, 1);
 		the_scene = glGenLists(1);
 		glNewList(the_scene, GL_COMPILE);
-			if (!added_trans){
-				for (int i = 0; i < int(quick_load.size()); i++){
-					glPushMatrix();
-					glMultMatrixd(&(quick_load[i].m(0, 0)));
-					quick_load[i].o->drawObject();
-					glPopMatrix();
-				}
-			}
-
-			else{
-				Tree *  root = master_subgraphs["root"];
-				for (int i = 0; i < int(root->getChildList().size()); i++){
-					Trans * t = root->getChildList()[i];
-					RecursiveDescent(t, t->getMatrix());
-				}
-			}
-		glEndList();
-		loaded = true;
-	}
-	//
-	
-	/*if (!added_trans){
 		for (int i = 0; i < int(quick_load.size()); i++){
 			glPushMatrix();
 			glMultMatrixd(&(quick_load[i].m(0, 0)));
 			quick_load[i].o->drawObject();
 			glPopMatrix();
 		}
+		glEndList();
+		loaded = true;
 	}
-
-	else{
-		Tree *  root = master_subgraphs["root"];
-		for (int i = 0; i < int(root->getChildList().size()); i++){
-			Trans * t = root->getChildList()[i];
-			RecursiveDescent(t, t->getMatrix());
-		}
-	}*/
-
-	
-	
-
-
-	/*
-	for (auto ele : to_be_drawn){
-		glPushMatrix();
-			glMultMatrixd(&(ele.m(0, 0)));
-			ele.o->drawObject();
-		glPopMatrix();
-	}*/
 	glDisable(GL_BLEND);
-	
 }

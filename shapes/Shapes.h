@@ -73,7 +73,7 @@ public:
 			normal[0].print();
 			normal[1].print();
 			normal[2].print();
-			std::cout <<std::endl << std::endl;
+			std::cout << std::endl << std::endl;
 		}
 	};
 
@@ -138,7 +138,7 @@ public:
 
 
 	//Interacts with the ShapeUI carries information from that class to this class.
-	void Set(ShapesUI::ShapeType type, int param_1, int param_2=1);
+	void Set(ShapesUI::ShapeType type, int param_1, int param_2 = 1);
 
 
 	//Go counter-clockwise!!!
@@ -148,7 +148,7 @@ public:
 
 	void Draw();
 
-	
+
 	bool IsZero(double num);
 	bool IsZero(Vector3 vec);
 	bool IsZero(Point3 pt);
@@ -159,6 +159,7 @@ public:
 	Vector3	Vec_times_Point(const Vector3 & lhs, const Point3 & rhs);
 
 	virtual void Intersect(HitRecord & hr, Point3 P, Vector3 d);
+	void getCorrectIntersect(int const & num, HitRecord & hr, Point3 & P, Vector3 & d);
 
 protected:
 	std::vector<std::vector<Face_Normal>> square;
@@ -182,8 +183,8 @@ private:
 
 
 	const double M_PI_180 = double(double(M_PI) / double(180));
-	
-	
+
+
 	int Square_iter;
 	int Square_Max;
 	int prev_h = 0;

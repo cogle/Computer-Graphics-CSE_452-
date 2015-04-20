@@ -163,6 +163,9 @@
     <ClCompile Include="shapes\Parser.cpp">
       <Filter>Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="sceneview\SubGraph.cpp">
+      <Filter>Sceneview</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -287,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="shapes\Parser.h">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneview\SubGraph.h">
+      <Filter>Sceneview</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

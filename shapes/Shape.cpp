@@ -7,7 +7,7 @@
 #include "Parser.h"
 
 Shape::Shape(){
-	
+
 }
 
 
@@ -76,13 +76,13 @@ void Shape::Set(ShapesUI::ShapeType type, int param1, int param2){
 
 
 		prev_visit = true;
-		
+
 	}
 	if ((type == ShapesUI::SHAPE_CONE || type == ShapesUI::SHAPE_CYLINDER || type == ShapesUI::SHAPE_DIAMOND) && prev_t != cur_t){
 		prev_t = cur_t;
 		prev_h = -1;
 		stacks.clear();
-	}	
+	}
 	if (type == ShapesUI::SHAPE_CUBE){
 		s_iter = Squares.find(param1);
 		if (s_iter == Squares.end()){
@@ -101,7 +101,7 @@ void Shape::Set(ShapesUI::ShapeType type, int param1, int param2){
 		}
 		if (prev_h != param2){
 			stacks.clear();
-			Cylinder(param1 ,param2, stacks);
+			Cylinder(param1, param2, stacks);
 			prev_h = param2;
 		}
 		if (prev_cd != param1){
@@ -151,14 +151,14 @@ void Shape::Set(ShapesUI::ShapeType type, int param1, int param2){
 	}
 	if (type == ShapesUI::SHAPE_SPHERE){
 		//Above 10 will crash the program. 
-		if (param1 >=10){
+		if (param1 >= 10){
 			param1 = 5;
 		}
 		sphere_iter = sphere_storage.find(param1);
 		if (sphere_iter == sphere_storage.end()){
 			int closest = getClosestSphere(param1);
 			std::vector<Vertex_Normal> temp;
-			Sphere(sphere_storage[closest], param1 - closest,temp);
+			Sphere(sphere_storage[closest], param1 - closest, temp);
 			sphere_storage[param1] = temp;
 			Shpere_Sections = sphere_storage[param1];
 			prev_spheres.push_back(param1);
@@ -170,7 +170,7 @@ void Shape::Set(ShapesUI::ShapeType type, int param1, int param2){
 	if (type == ShapesUI::SHAPE_TORUS){
 		torus_vec.clear();
 		torus_pts.clear();
-		Torus(param1,param2,torus_vec,torus_pts);
+		Torus(param1, param2, torus_vec, torus_pts);
 	}
 }
 
@@ -181,42 +181,42 @@ void Shape::Draw(){
 		Matrix4 back = Matrix4();
 		Matrix4 right = Matrix4();
 
-		vert = base.translation(Vector3(0,1,0));
-		back = base.translation(Vector3(-1,0,0));
-		right = base.translation(Vector3(0,0,-1));
-		for (int i = 0; i < int(square.size()) ;i++){	
+		vert = base.translation(Vector3(0, 1, 0));
+		back = base.translation(Vector3(-1, 0, 0));
+		right = base.translation(Vector3(0, 0, -1));
+		for (int i = 0; i < int(square.size()); i++){
 			for (int j = 0; j < int(square[i].size()); j++){
 				if (square[i][j].ID == 0){
 					//Bottom Panel
 					glBegin(GL_TRIANGLES);
-						glNormal3d(0, -1 , 0);
-						glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
-						glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
-						glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
+					glNormal3d(0, -1, 0);
+					glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
+					glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
+					glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
 					glEnd();
 
 					//Top Panel
 					Vector4 entry_0 = vert*square[i][j].points[0];
 					Vector4 entry_1 = vert*square[i][j].points[1];
 					Vector4 entry_2 = vert*square[i][j].points[2];
-					
+
 					//Have to draw in reverse order
 					glBegin(GL_TRIANGLES);
-						glNormal3d(0, 1, 0);
-						glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
-						glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
-						glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
+					glNormal3d(0, 1, 0);
+					glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
+					glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
+					glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
 					glEnd();
 					continue;
 				}
 				if (square[i][j].ID == 1){
 					//Front Panel
 					glBegin(GL_TRIANGLES);
-						//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
-						glNormal3d(1, 0, 0);
-						glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
-						glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
-						glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
+					//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
+					glNormal3d(1, 0, 0);
+					glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
+					glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
+					glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
 					glEnd();
 
 					//Back Panel
@@ -226,22 +226,22 @@ void Shape::Draw(){
 
 					//Have to draw in reverse order
 					glBegin(GL_TRIANGLES);
-						//glNormal3d(square[i][j].normal[0]*-1, square[i][j].normal[1], square[i][j].normal[2]);
-						glNormal3d(-1, 0, 0);
-						glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
-						glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
-						glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
+					//glNormal3d(square[i][j].normal[0]*-1, square[i][j].normal[1], square[i][j].normal[2]);
+					glNormal3d(-1, 0, 0);
+					glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
+					glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
+					glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
 					glEnd();
 					continue;
-				}	
+				}
 				if (square[i][j].ID == 2){
 					//Front Panel
 					glBegin(GL_TRIANGLES);
-						//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
-						glNormal3d(0, 0, 1);
-						glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
-						glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
-						glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
+					//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]);
+					glNormal3d(0, 0, 1);
+					glVertex3d(square[i][j].points[0][0], square[i][j].points[0][1], square[i][j].points[0][2]);
+					glVertex3d(square[i][j].points[1][0], square[i][j].points[1][1], square[i][j].points[1][2]);
+					glVertex3d(square[i][j].points[2][0], square[i][j].points[2][1], square[i][j].points[2][2]);
 					glEnd();
 
 					//Back Panel
@@ -251,11 +251,11 @@ void Shape::Draw(){
 
 					//Have to draw in reverse order
 					glBegin(GL_TRIANGLES);
-						//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]*-1);
-						glNormal3d(0, 0, -1);
-						glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
-						glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
-						glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
+					//glNormal3d(square[i][j].normal[0], square[i][j].normal[1], square[i][j].normal[2]*-1);
+					glNormal3d(0, 0, -1);
+					glVertex3d(entry_2[0], entry_2[1], entry_2[2]);
+					glVertex3d(entry_1[0], entry_1[1], entry_1[2]);
+					glVertex3d(entry_0[0], entry_0[1], entry_0[2]);
 					glEnd();
 					continue;
 				}
@@ -323,8 +323,8 @@ void Shape::Draw(){
 		}
 		else{
 			for (int i = 0; i < int(stacks.size()); i++){
-				Matrix4 shift_up = Matrix4::translation(Point3(0,.5,0));
-				Matrix4 scale = Matrix4::scaling(1,.5,1);
+				Matrix4 shift_up = Matrix4::translation(Point3(0, .5, 0));
+				Matrix4 scale = Matrix4::scaling(1, .5, 1);
 
 
 				/*Top of the Diamond*/
@@ -337,9 +337,9 @@ void Shape::Draw(){
 					norm_0 = CalcNormal(Vector3(temp_0[0], temp_0[1], temp_0[2]), 5);
 				}
 				else{
-					norm_0 = CalcNormal(Vector3(temp_0[0],temp_0[1],temp_0[2]),2);
+					norm_0 = CalcNormal(Vector3(temp_0[0], temp_0[1], temp_0[2]), 2);
 				}
-				
+
 				Vector4 temp_1 = scale*shift_up*stacks[i].points[1];
 				if (stacks[i].top){
 					norm_1 = CalcNormal(Vector3(temp_1[0], temp_1[1], temp_1[2]), 5);
@@ -357,55 +357,55 @@ void Shape::Draw(){
 				}
 
 
-				
+
 
 				glBegin(GL_TRIANGLES);
-					glNormal3d(norm_0[0], norm_0[1], norm_0[2]);
-					glVertex3d(temp_0[0], temp_0[1], temp_0[2]);
+				glNormal3d(norm_0[0], norm_0[1], norm_0[2]);
+				glVertex3d(temp_0[0], temp_0[1], temp_0[2]);
 
-					glNormal3d(norm_1[0], norm_1[1], norm_1[2]);
-					glVertex3d(temp_1[0], temp_1[1], temp_1[2]);
+				glNormal3d(norm_1[0], norm_1[1], norm_1[2]);
+				glVertex3d(temp_1[0], temp_1[1], temp_1[2]);
 
-					glNormal3d(norm_2[0], norm_2[1], norm_2[2]);
-					glVertex3d(temp_2[0], temp_2[1], temp_2[2]);
+				glNormal3d(norm_2[0], norm_2[1], norm_2[2]);
+				glVertex3d(temp_2[0], temp_2[1], temp_2[2]);
 
-										
-					glNormal3d(norm_0[0], -norm_0[1], norm_0[2]);
-					glVertex3d(temp_2[0], -temp_2[1], temp_2[2]);
 
-					glNormal3d(norm_1[0], -norm_1[1], norm_1[2]);
-					glVertex3d(temp_1[0], -temp_1[1], temp_1[2]);
+				glNormal3d(norm_0[0], -norm_0[1], norm_0[2]);
+				glVertex3d(temp_2[0], -temp_2[1], temp_2[2]);
 
-					glNormal3d(norm_2[0], -norm_2[1], norm_2[2]);
-					glVertex3d(temp_0[0], -temp_0[1], temp_0[2]);
+				glNormal3d(norm_1[0], -norm_1[1], norm_1[2]);
+				glVertex3d(temp_1[0], -temp_1[1], temp_1[2]);
 
-				
+				glNormal3d(norm_2[0], -norm_2[1], norm_2[2]);
+				glVertex3d(temp_0[0], -temp_0[1], temp_0[2]);
+
+
 				glEnd();
-			}	
+			}
 		}
 	}
 	if (cur_t == ShapesUI::SHAPE_SPHERE){
 		for (int i = 0; i < int(Shpere_Sections.size()); i++){
-				glBegin(GL_TRIANGLES);
-					glNormal3d(Shpere_Sections[i].normal[0][0], Shpere_Sections[i].normal[0][1], Shpere_Sections[i].normal[0][2]);
-					glVertex3d(Shpere_Sections[i].points[0][0], Shpere_Sections[i].points[0][1], Shpere_Sections[i].points[0][2]);
+			glBegin(GL_TRIANGLES);
+			glNormal3d(Shpere_Sections[i].normal[0][0], Shpere_Sections[i].normal[0][1], Shpere_Sections[i].normal[0][2]);
+			glVertex3d(Shpere_Sections[i].points[0][0], Shpere_Sections[i].points[0][1], Shpere_Sections[i].points[0][2]);
 
 
-					glNormal3d(Shpere_Sections[i].normal[1][0], Shpere_Sections[i].normal[1][1], Shpere_Sections[i].normal[1][2]);
-					glVertex3d(Shpere_Sections[i].points[1][0], Shpere_Sections[i].points[1][1], Shpere_Sections[i].points[1][2]);
+			glNormal3d(Shpere_Sections[i].normal[1][0], Shpere_Sections[i].normal[1][1], Shpere_Sections[i].normal[1][2]);
+			glVertex3d(Shpere_Sections[i].points[1][0], Shpere_Sections[i].points[1][1], Shpere_Sections[i].points[1][2]);
 
 
-					glNormal3d(Shpere_Sections[i].normal[2][0], Shpere_Sections[i].normal[2][1], Shpere_Sections[i].normal[2][2]);
-					glVertex3d(Shpere_Sections[i].points[2][0], Shpere_Sections[i].points[2][1], Shpere_Sections[i].points[2][2]);
-				glEnd();
+			glNormal3d(Shpere_Sections[i].normal[2][0], Shpere_Sections[i].normal[2][1], Shpere_Sections[i].normal[2][2]);
+			glVertex3d(Shpere_Sections[i].points[2][0], Shpere_Sections[i].points[2][1], Shpere_Sections[i].points[2][2]);
+			glEnd();
 		}
 	}
 	if (cur_t == ShapesUI::SHAPE_TORUS){
 		/*for (int i = 0; i < int(torus_pts.size()); i++){
-			glBegin(GL_POINTS);
-				glVertex3d(torus_pts[i].points[0][0], torus_pts[i].points[0][1],torus_pts[i].points[0][2]);
-				glVertex3d(torus_pts[i].points[1][0], torus_pts[i].points[1][1], torus_pts[i].points[1][2]);
-			glEnd();
+		glBegin(GL_POINTS);
+		glVertex3d(torus_pts[i].points[0][0], torus_pts[i].points[0][1],torus_pts[i].points[0][2]);
+		glVertex3d(torus_pts[i].points[1][0], torus_pts[i].points[1][1], torus_pts[i].points[1][2]);
+		glEnd();
 		}*/
 		for (int i = 0; i < int(torus_vec.size()); i++){
 			glBegin(GL_TRIANGLES);
@@ -428,14 +428,14 @@ void Shape::Draw(){
 			//std::cout << i << std::endl;
 			//faces[i].print();
 			glBegin(GL_TRIANGLES);
-				
-			//if (cur_t == ShapesUI::SHAPE_BOWL){ glNormal3d(-1*faces[i].normal[0], -1*faces[i].normal[1], -1*faces[i].normal[2]); }
-				glNormal3d(faces[i].normal[0], faces[i].normal[1], faces[i].normal[2]); 
-				glVertex3d(faces[i].points[0][0], faces[i].points[0][1], faces[i].points[0][2]);
-			
-				glVertex3d(faces[i].points[1][0], faces[i].points[1][1], faces[i].points[1][2]);
 
-				glVertex3d(faces[i].points[2][0], faces[i].points[2][1], faces[i].points[2][2]);
+			//if (cur_t == ShapesUI::SHAPE_BOWL){ glNormal3d(-1*faces[i].normal[0], -1*faces[i].normal[1], -1*faces[i].normal[2]); }
+			glNormal3d(faces[i].normal[0], faces[i].normal[1], faces[i].normal[2]);
+			glVertex3d(faces[i].points[0][0], faces[i].points[0][1], faces[i].points[0][2]);
+
+			glVertex3d(faces[i].points[1][0], faces[i].points[1][1], faces[i].points[1][2]);
+
+			glVertex3d(faces[i].points[2][0], faces[i].points[2][1], faces[i].points[2][2]);
 			glEnd();
 		}
 	}
@@ -445,23 +445,23 @@ void Shape::Draw(){
 Vector3 Shape::CalcNormal(Vector3 cord_0, int case_num){
 	switch (case_num){
 
-	//Cylinder
+		//Cylinder
 	case 1:
 		return Vector3(cord_0[0], 0, cord_0[2]);
-	
-	//Cone
+
+		//Cone
 	case 2:
-		return Vector3(cord_0[0], double(.5)*sqrt(pow(cord_0[0],2) + pow(cord_0[2],2)), cord_0[2]);
+		return Vector3(cord_0[0], double(.5)*sqrt(pow(cord_0[0], 2) + pow(cord_0[2], 2)), cord_0[2]);
 
-	//Shpere
-	case 3: 
-		return Vector3(cord_0[0],cord_0[1],cord_0[2]);
+		//Shpere
+	case 3:
+		return Vector3(cord_0[0], cord_0[1], cord_0[2]);
 
-	//Circle
+		//Circle
 	case 4:
 		return Vector3(0, -1, 0);
 
-	//Cone top
+		//Cone top
 	case 5:
 		return Vector3(cord_0[0], double(.5)*sqrt(pow(cord_0[0], 2) + pow(cord_0[2], 2)), cord_0[2]);
 	default:
@@ -474,15 +474,15 @@ void Shape::AddTriangleWithVertexNormal(Vector3 cord_0, Vector3 cord_1, Vector3 
 	Vector3 cord_0_norm = CalcNormal(cord_0, case_num);
 	Vector3 cord_1_norm = CalcNormal(cord_1, case_num);
 	Vector3 cord_2_norm = CalcNormal(cord_2, case_num);
-	 
-	Vector4 v0 = Vector4(cord_0[0], cord_0[1],cord_0[2] , 1);
+
+	Vector4 v0 = Vector4(cord_0[0], cord_0[1], cord_0[2], 1);
 	Vector4 v1 = Vector4(cord_1[0], cord_1[1], cord_1[2], 1);
 	Vector4 v2 = Vector4(cord_2[0], cord_2[1], cord_2[2], 1);
-	
+
 	if (case_num == 5){
-		cord_0_norm = Vector3(0,1,0);
+		cord_0_norm = Vector3(0, 1, 0);
 	}
-	Vertex_Normal triangle(v0,cord_0_norm,v1,cord_1_norm,v2,cord_2_norm);
+	Vertex_Normal triangle(v0, cord_0_norm, v1, cord_1_norm, v2, cord_2_norm);
 	if (case_num == 5){
 		triangle.top = true;
 	}
@@ -501,7 +501,7 @@ void Shape::DrawCircle(int divisions, std::vector<Vertex_Normal> &  circles){
 	double v2_x = double(.5)*cos(DegreeToRad(d_theta));
 	double v2_z = double(.5)*sin(DegreeToRad(d_theta));
 	Vector4 v2 = Vector4(v2_x, -.5, v2_z, 1);
-	AddTriangleWithVertexNormal(Vector3(v0[0], v0[1], v0[2]), Vector3(v1[0], v1[1], v1[2]), Vector3(v2[0], v2[1], v2[2]), circles,4);
+	AddTriangleWithVertexNormal(Vector3(v0[0], v0[1], v0[2]), Vector3(v1[0], v1[1], v1[2]), Vector3(v2[0], v2[1], v2[2]), circles, 4);
 
 	int count = 1;
 	Vector4 prev0 = v0;
@@ -538,7 +538,7 @@ Vector3 Shape::Torus_CalcNormal(double small_A, double big){
 	//Vector3 ret = Vector3(.5*cos(big)*cos(small_A), .5*cos(big)*sin(small_A), .5*sin(small_A));
 	ret.normalize();
 	//ret.print();
-	return -1*ret;
+	return -1 * ret;
 }
 
 
@@ -582,12 +582,12 @@ bool Shape::IsZero(Point3 pt){
 }
 
 Vector3 Shape::Vector_Squared(const Vector3 & vec){
-	Vector3 ret = Vector3(vec[0]*vec[0],vec[1]*vec[1],vec[2]*vec[2]);
+	Vector3 ret = Vector3(vec[0] * vec[0], vec[1] * vec[1], vec[2] * vec[2]);
 	return ret;
 }
 
 Point3 Shape::Point_Squared(const Point3 & pt){
-	Point3 ret = Point3(pt[0]*pt[0],pt[1]*pt[1],pt[2]*pt[2]);
+	Point3 ret = Point3(pt[0] * pt[0], pt[1] * pt[1], pt[2] * pt[2]);
 	return ret;
 }
 
@@ -602,10 +602,10 @@ void Shape::Intersect(HitRecord & hr, Point3 Origin, Vector3 d){
 		Vector3 v1 = Vector3(faces[i].points[0][0], faces[i].points[0][1], faces[i].points[0][2]);
 		Vector3 v2 = Vector3(faces[i].points[1][0], faces[i].points[1][1], faces[i].points[1][2]);
 		Vector3 v3 = Vector3(faces[i].points[2][0], faces[i].points[2][1], faces[i].points[2][2]);
-		
+
 		Vector3 edge_1 = v2 - v1;
 		Vector3 edge_2 = v3 - v1;
-		
+
 		double det, inv_Det, u, v;
 		double t;
 		Vector3 P, Q, T;
@@ -619,7 +619,7 @@ void Shape::Intersect(HitRecord & hr, Point3 Origin, Vector3 d){
 
 		inv_Det = double(double(1) / det);
 		T = Vector3(Origin[0], Origin[1], Origin[2]) - v1;
-	
+
 		u = T*P*inv_Det;
 
 		if (u < 0 || u > 1){
@@ -629,15 +629,15 @@ void Shape::Intersect(HitRecord & hr, Point3 Origin, Vector3 d){
 		Q = T^edge_1;
 		v = (d*Q)*inv_Det;
 
-		if (v < 0 || u +  v > 1){
+		if (v < 0 || u + v > 1){
 			continue;
 		}
 
 		t = (edge_2*Q)*inv_Det;
-		
+
 		if (t > EPSILON){
 			Vector3 pt = Vector3(Origin[0], Origin[1], Origin[2]) + t*d;
-			hr.addHit(t, 0, 0, Point3(pt[0],pt[1],pt[2]), faces[i].normal);
+			hr.addHit(t, 0, 0, Point3(pt[0], pt[1], pt[2]), faces[i].normal);
 		}
 	}
 }
@@ -651,7 +651,7 @@ bool Shape::LiesOnTriangle(const Vector3 & P, const Vector3 & A, const Vector3 &
 	v0 = B - A;
 	v1 = C - A;
 	v2 = P - A;
-	
+
 	float dot_00 = float(v0*v0);
 	float dot_01 = float(v0*v1);
 	float dot_11 = float(v1*v1);
@@ -659,7 +659,7 @@ bool Shape::LiesOnTriangle(const Vector3 & P, const Vector3 & A, const Vector3 &
 	float dot_21 = float(v2*v1);
 
 	float bot = dot_00*dot_11 - dot_01*dot_01;
-	
+
 	alpha = (dot_11*dot_20 - dot_01*dot_21) / bot;
 	beta = (dot_00*dot_21 - dot_01*dot_20) / bot;
 	gamma = float(1) - alpha - beta;
@@ -675,7 +675,7 @@ bool Shape::LiesOnTriangle(const Vector3 & P, const Vector3 & A, const Vector3 &
 	if (gamma == 0 && (0 >= alpha && alpha <= 1) && (0 >= beta && beta <= 1)){
 		return true;
 	}
-	if (alpha == 1 && beta == 0 && gamma ==0){
+	if (alpha == 1 && beta == 0 && gamma == 0){
 		return true;
 	}
 	if (beta == 1 && alpha == 0 && gamma == 0){
@@ -685,4 +685,40 @@ bool Shape::LiesOnTriangle(const Vector3 & P, const Vector3 & A, const Vector3 &
 		return true;
 	}
 	return false;
+}
+
+
+void Shape::getCorrectIntersect(int const & num, HitRecord & hr, Point3 & P, Vector3 & d){
+	Square * cube_ptr = nullptr;
+	Cylinder * cylinder_ptr = nullptr;
+	Cone * cone_ptr = nullptr;
+	Sphere * sphere_ptr = nullptr;
+	switch (num)
+	{
+	case 1:
+		cube_ptr = new Square();
+		cube_ptr->Intersect(hr, P, d);
+		break;
+	case 2:
+		cylinder_ptr = new Cylinder();
+		cylinder_ptr->Intersect(hr, P, d);
+		break;
+	case 3:
+		cone_ptr = new Cone();
+		cone_ptr->Intersect(hr, P, d);
+		break;
+	case 4:
+		sphere_ptr = new Sphere();
+		sphere_ptr->Intersect(hr, P, d);
+		break;
+	case 5:
+		Intersect(hr, P, d);
+		break;
+	default:
+		break;
+	}
+	delete cube_ptr;
+	delete cylinder_ptr;
+	delete cone_ptr;
+	delete sphere_ptr;
 }

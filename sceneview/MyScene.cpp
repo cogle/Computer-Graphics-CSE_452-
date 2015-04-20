@@ -134,7 +134,14 @@ bool MyScene::loadSceneFile(std::string filename) {
 		// perform any post-loading computations here
 		// (such as flattening the tree or building
 		// ray-acceleration structures)
-
+		if (added_trans){
+			Tree *  root = master_subgraphs["root"];
+			for (int i = 0; i < int(root->getChildList().size()); i++){
+				Trans * t = root->getChildList()[i];
+				RecursiveDescent(t, t->getMatrix());
+			}
+		}
+		
 	}
 	else if (errorMessage.length() == 0 || !found_root){
 		errorMessage = "Unable to locate root mastersubgraph";
@@ -481,29 +488,35 @@ Object* MyScene::parseObject(Parser& p) {
 		// object is a cube
 		ret->setShape(shape_c->getCube());
 		ret->setName("Cube");
+		ret->SetShapeNum(1);
 	}
 	else if (p.getToken() == TOKEN_CYLINDER) {
 		// object is a cylinder
 		ret->setShape(shape_c->getCylinder());
 		ret->setName("Cylinder");
+		ret->SetShapeNum(2);
 	}
 	else if (p.getToken() == TOKEN_CONE) {
 		// object is a cone
 		ret->setShape(shape_c->getCone());
 		ret->setName("Cone");
+		ret->SetShapeNum(3);
 	}
 	else if (p.getToken() == TOKEN_SPHERE) {
 		// object is a sphere
 		ret->setShape(shape_c->getSphere());
 		ret->setName("Sphere");
+		ret->SetShapeNum(4);
 	}
 	else if (p.getToken() == TOKEN_FISH) {
 		ret->setShape(shape_c->getFish());
 		ret->setName("Fish");
+		ret->SetShapeNum(5);
 	}
 	else if (p.getToken() == TOKEN_BOWL) {
 		ret->setShape(shape_c->getBowl());
 		ret->setName("Bowl");
+		ret->SetShapeNum(5);
 	}
 	else {
 		errorMessage = "Unrecognized object type: \"" + p.getToken() + "\"";
@@ -624,10 +637,12 @@ const Color &MyScene::getBackground() const {
 void MyScene::RecursiveDescent(Trans * t, Matrix4 cur_m){
 	if (t->NoSubGraphs()){
 		//to_be_drawn.push_back(DrawObject(cur_m, t->getObject()));
-		glPushMatrix();
+		/*glPushMatrix();
 			glMultMatrixd(&(cur_m(0, 0)));
 			t->getObject()->drawObject();
-		glPopMatrix();
+			
+		glPopMatrix();*/
+		quick_load.push_back(DrawObject(cur_m, t->getObject()));
 		return;
 	}
 	else{

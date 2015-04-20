@@ -178,7 +178,7 @@ void Camera::setZoom(double z) {
 					Vector4(0, cot_h, 0, 0),
 					Vector4(0, 0, 1, 0),
 					Vector4(0, 0, 0, 1));
-	S_xy_inv = Matrix4(	Vector4(tan(theta_w / double(2)), 0, 0, 0),
+	S_xy_inv = Matrix4(Vector4(tan(DegreeToRad(zoom / double(2))), 0, 0, 0),
 						Vector4(0, tan(DegreeToRad(zoom / double(2))), 0, 0),
 						Vector4(0, 0, 1, 0),
 						Vector4(0, 0, 0, 1));

@@ -120,7 +120,7 @@ void Cylinder::Intersect(HitRecord & hr, Point3 P, Vector3 d){
 		}
 		//Perfect
 		if (test_pt_1[1] < .5 && test_pt_1[1] > -.5){
-			if (closest >= 0 && closest <= 4){
+			if (closest >= 0 ){
 				Vector3 vec = Vector3(P[0], P[1], P[2]) + closest*d;
 				Vector3 norm = CalcNormal(vec, 1);
 				norm.normalize();
@@ -129,7 +129,7 @@ void Cylinder::Intersect(HitRecord & hr, Point3 P, Vector3 d){
 		}
 		//Perfect
 		if (test_pt_2[1] < .5 && test_pt_2[1] > -.5){
-			if (furthest >= 0 && furthest <= 4){
+			if (furthest >= 0 ){
 				Vector3 vec = Vector3(P[0], P[1], P[2]) + furthest*d;
 				Vector3 norm = CalcNormal(vec, 1);
 				norm.normalize();
@@ -151,7 +151,7 @@ void Cylinder::Intersect(HitRecord & hr, Point3 P, Vector3 d){
 		double test_pt = vec[0] * vec[0] + vec[2] * vec[2];
 		//std::cout << "t_top: " << t << std::endl;
 		//vec.print();
-		if (t >= 0 && t <= 4 && test_pt <= .25){
+		if (t >= 0  && test_pt <= .25){
 			hr.addHit(t, 0, 0, Point3(vec[0], vec[1], vec[2]), Vector3(0, 1, 0));
 		}
 	}
@@ -164,7 +164,7 @@ void Cylinder::Intersect(HitRecord & hr, Point3 P, Vector3 d){
 		double test_pt = vec[0] * vec[0] + vec[2] * vec[2];
 		//std::cout << "t_bot: " << t << std::endl;
 		//vec.print();
-		if (t >= 0 && t <= 4 && test_pt <= .25){
+		if (t >= 0  && test_pt <= .25){
 			hr.addHit(t, 0, 0, Point3(vec[0], vec[1], vec[2]), Vector3(0, -1, 0));
 		}
 	}
